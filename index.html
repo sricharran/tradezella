@@ -32,6 +32,7 @@
 
 <!-- APP -->
 <div id="app">
+  <!-- POLISHED SIDEBAR -->
   <nav class="sb">
     <div class="sb-logo">
       <div class="sb-brand">
@@ -41,14 +42,22 @@
       <div class="sb-tagline">Personal Journal · INR</div>
     </div>
     <div class="sb-nav">
-      <button class="ni on"  onclick="go('dashboard',this)"><div class="ni-icon">⊞</div> Dashboard</button>
-      <button class="ni"     onclick="go('journal',this)"><div class="ni-icon">◧</div> Journal</button>
-      <button class="ni"     onclick="go('dailyjournal',this)"><div class="ni-icon">📓</div> Daily Journal</button>
-      <button class="ni"     onclick="go('playbook',this)"><div class="ni-icon">📋</div> Playbook</button>
-      <button class="ni"     onclick="go('reports',this)"><div class="ni-icon">📊</div> Reports</button>
-      <button class="ni"     onclick="go('analytics',this)"><div class="ni-icon">◉</div> Analytics</button>
-      <button class="ni"     onclick="go('calculator',this)"><div class="ni-icon">◫</div> Calculator</button>
-      <button class="ni"     onclick="go('settings',this)"><div class="ni-icon">⊙</div> Settings</button>
+      <div class="sb-lbl">Overview</div>
+      <button class="ni on" onclick="go('dashboard',this)"><div class="ni-icon">🏠</div> Dashboard</button>
+
+      <div class="sb-lbl">Trading</div>
+      <button class="ni" onclick="go('journal',this)"><div class="ni-icon">📒</div> Journal</button>
+      <button class="ni" onclick="go('dailyjournal',this)"><div class="ni-icon">📓</div> Daily Journal</button>
+      <button class="ni" onclick="go('playbook',this)"><div class="ni-icon">📋</div> Playbook</button>
+
+      <div class="sb-divider"></div>
+      <div class="sb-lbl">Analysis</div>
+      <button class="ni" onclick="go('reports',this)"><div class="ni-icon">📊</div> Reports</button>
+      <button class="ni" onclick="go('analytics',this)"><div class="ni-icon">🔵</div> Analytics</button>
+      <button class="ni" onclick="go('calculator',this)"><div class="ni-icon">🧮</div> Calculator</button>
+
+      <div class="sb-divider"></div>
+      <button class="ni" onclick="go('settings',this)"><div class="ni-icon">⚙️</div> Settings</button>
     </div>
     <div class="sb-bot">
       <button class="add-btn" onclick="openAdd()">+ Add Trade</button>
@@ -57,7 +66,7 @@
 
   <div class="main">
 
-    <!-- DASHBOARD -->
+    <!-- ── DASHBOARD ── -->
     <div class="page on" id="pg-dashboard">
       <div class="topbar">
         <div class="topbar-left">
@@ -69,43 +78,98 @@
         </div>
       </div>
 
+      <!-- STAT CARDS WITH GAUGES -->
       <div class="sg">
-        <div class="sc"><div class="sc-accent purple"></div><div class="sc-top"><div class="sc-lbl">Total P&amp;L</div><div class="sc-ico ico-purple">💰</div></div><div class="sc-val purple" id="s-pnl">₹0</div><div class="sc-sub" id="s-psub">0 trades logged</div></div>
-        <div class="sc"><div class="sc-accent green"></div><div class="sc-top"><div class="sc-lbl">Win Rate</div><div class="sc-ico ico-green">🎯</div></div><div class="sc-val neu" id="s-wr">0%</div><div class="sc-sub" id="s-wsub">0W · 0L</div></div>
-        <div class="sc"><div class="sc-accent blue"></div><div class="sc-top"><div class="sc-lbl">Profit Factor</div><div class="sc-ico ico-blue">⚡</div></div><div class="sc-val neu" id="s-pf">0.00</div><div class="sc-sub">Gross profit / gross loss</div></div>
-        <div class="sc"><div class="sc-accent amber"></div><div class="sc-top"><div class="sc-lbl">Avg Risk:Reward</div><div class="sc-ico ico-amber">📐</div></div><div class="sc-val neu" id="s-rr">—</div><div class="sc-sub">Average across all trades</div></div>
+        <div class="sc">
+          <div class="sc-accent purple"></div>
+          <div class="sc-top">
+            <div class="sc-lbl">Total P&amp;L</div>
+            <div class="sc-gauge-wrap"><canvas id="g-pnl" width="52" height="32"></canvas><div class="sc-gauge-val" id="gv-pnl"></div></div>
+          </div>
+          <div class="sc-val purple" id="s-pnl">₹0</div>
+          <div class="sc-sub" id="s-psub">0 trades logged</div>
+        </div>
+        <div class="sc">
+          <div class="sc-accent green"></div>
+          <div class="sc-top">
+            <div class="sc-lbl">Win Rate</div>
+            <div class="sc-gauge-wrap"><canvas id="g-wr" width="52" height="32"></canvas><div class="sc-gauge-val" id="gv-wr"></div></div>
+          </div>
+          <div class="sc-val neu" id="s-wr">0%</div>
+          <div class="sc-sub" id="s-wsub">0W · 0L</div>
+        </div>
+        <div class="sc">
+          <div class="sc-accent blue"></div>
+          <div class="sc-top">
+            <div class="sc-lbl">Profit Factor</div>
+            <div class="sc-gauge-wrap"><canvas id="g-pf" width="52" height="32"></canvas><div class="sc-gauge-val" id="gv-pf"></div></div>
+          </div>
+          <div class="sc-val neu" id="s-pf">0.00</div>
+          <div class="sc-sub">Gross profit / gross loss</div>
+        </div>
+        <div class="sc">
+          <div class="sc-accent amber"></div>
+          <div class="sc-top">
+            <div class="sc-lbl">Avg Risk:Reward</div>
+            <div class="sc-gauge-wrap"><canvas id="g-rr" width="52" height="32"></canvas><div class="sc-gauge-val" id="gv-rr"></div></div>
+          </div>
+          <div class="sc-val neu" id="s-rr">—</div>
+          <div class="sc-sub">Average across all trades</div>
+        </div>
       </div>
 
-      <!-- SCORE + CHARTS ROW -->
+      <!-- SCORE + EQUITY + WIN/LOSS ROW -->
       <div class="dash-row3">
-        <!-- TradeLog Score radar -->
         <div class="cc">
-          <div class="cc-head"><div><div class="cc-lbl">TradeLog Score</div><div class="cc-sub">Process · Win Rate · Profit Factor</div></div><div class="tls-badge" id="tls-badge">—</div></div>
-          <canvas id="radar-c" height="170"></canvas>
+          <div class="cc-head">
+            <div><div class="cc-lbl">TradeLog Score</div><div class="cc-sub">Process · Win Rate · Profit Factor</div></div>
+            <div class="tls-badge" id="tls-badge" style="color:var(--purple)">—</div>
+          </div>
+          <canvas id="radar-c" height="190"></canvas>
           <div class="tls-sub" id="tls-sub">Log trades to see your score</div>
         </div>
-        <!-- Equity Curve -->
         <div class="cc">
-          <div class="cc-head"><div><div class="cc-lbl">Equity Curve</div><div class="cc-sub">Cumulative P&amp;L over time</div></div><div class="cc-big" id="eq-big" style="color:var(--green)">₹0</div></div>
-          <canvas id="eq-c" height="150"></canvas>
+          <div class="cc-head">
+            <div><div class="cc-lbl">Equity Curve</div><div class="cc-sub">Cumulative P&amp;L over time</div></div>
+            <div class="cc-big" id="eq-big" style="color:var(--green)">₹0</div>
+          </div>
+          <canvas id="eq-c" height="165"></canvas>
         </div>
-        <!-- Win/Loss -->
         <div class="cc">
           <div class="cc-head"><div><div class="cc-lbl">Win / Loss Split</div><div class="cc-sub">Outcome breakdown</div></div></div>
-          <canvas id="wl-c" height="150"></canvas>
+          <canvas id="wl-c" height="165"></canvas>
         </div>
       </div>
 
-      <div class="br">
-        <div class="bp"><div class="bp-head">Streak Tracker</div><div class="str-row"><div class="str-box"><div class="str-n g" id="st-w">0</div><div class="str-l">Best Win</div></div><div class="str-box"><div class="str-n r" id="st-l">0</div><div class="str-l">Worst Loss</div></div><div class="str-box"><div class="str-n n" id="st-c">0</div><div class="str-l">Current</div></div></div></div>
-        <div class="bp"><div class="bp-head">Best &amp; Worst Trades</div><div id="bwlist"><div class="bw"><div class="bw-sym" style="color:var(--text3);font-size:13px">No trades yet</div></div></div></div>
+      <!-- NET DAILY P&L -->
+      <div class="ndp-card" style="margin-bottom:18px">
+        <div class="ndp-head">
+          <div><div class="cc-lbl">Net Daily P&amp;L</div><div class="cc-sub">Green/red bars per trading day (last 30 days)</div></div>
+        </div>
+        <canvas id="ndp-c" height="80"></canvas>
       </div>
 
-      <!-- RECENT TRADES MINI TABLE -->
-      <div class="bp" style="margin-bottom:16px">
+      <!-- STREAK + BEST/WORST -->
+      <div class="br">
+        <div class="bp">
+          <div class="bp-head">Streak Tracker</div>
+          <div class="str-row">
+            <div class="str-box"><div class="str-n g" id="st-w">0</div><div class="str-l">Best Win</div></div>
+            <div class="str-box"><div class="str-n r" id="st-l">0</div><div class="str-l">Worst Loss</div></div>
+            <div class="str-box"><div class="str-n n" id="st-c">0</div><div class="str-l">Current</div></div>
+          </div>
+        </div>
+        <div class="bp">
+          <div class="bp-head">Best &amp; Worst Trades</div>
+          <div id="bwlist"><div class="bw"><div class="bw-sym" style="color:var(--text3);font-size:13px">No trades yet</div></div></div>
+        </div>
+      </div>
+
+      <!-- RECENT TRADES -->
+      <div class="bp" style="margin-bottom:18px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
           <div class="bp-head" style="margin:0">Recent Trades</div>
-          <button class="link-btn" onclick="go('journal',document.querySelector('.ni:nth-child(2)'))">View All →</button>
+          <button class="link-btn" onclick="go('journal',document.querySelector('.ni:nth-child(3)'))">View All →</button>
         </div>
         <div class="recent-tbl">
           <div class="recent-hdr"><span>Symbol</span><span>Date</span><span>Setup</span><span>P&amp;L</span><span>Quality</span></div>
@@ -117,7 +181,7 @@
       <div class="dash-insights">
         <div class="ins-panel">
           <div class="ins-head"><div class="ins-label">Emotion vs P&amp;L</div><span class="ins-tag neutral" id="emo-best-tag">—</span></div>
-          <div id="emo-pnl-rows"><div class="otrade-empty">No emotions logged yet. Add emotional state when logging trades.</div></div>
+          <div id="emo-pnl-rows"><div class="otrade-empty">No emotions logged yet.</div></div>
         </div>
         <div class="ins-panel">
           <div class="ins-head"><div class="ins-label">Good vs Bad Trade P&amp;L Split</div><span class="ins-tag neutral" id="split-tag">Rules Cost</span></div>
@@ -132,10 +196,7 @@
 
     <!-- JOURNAL -->
     <div class="page" id="pg-journal">
-      <div class="topbar">
-        <div class="topbar-left"><h1>Journal <span class="cbadge" id="tcnt">0</span></h1><div class="sub">All trades · Stocks · INR</div></div>
-        <div class="topbar-right"><button class="pdf-btn" onclick="exportPDF()">⬇ Export PDF</button></div>
-      </div>
+      <div class="topbar"><div class="topbar-left"><h1>Journal <span class="cbadge" id="tcnt">0</span></h1><div class="sub">All trades · Stocks · INR</div></div><div class="topbar-right"><button class="pdf-btn" onclick="exportPDF()">⬇ Export PDF</button></div></div>
       <div class="jctrl">
         <input class="ci" id="fs" type="text" placeholder="Search symbol..." oninput="rj()" style="width:148px">
         <select class="ci" id="fr" onchange="rj()"><option value="">All Results</option><option value="win">Wins</option><option value="loss">Losses</option></select>
@@ -150,10 +211,7 @@
 
     <!-- DAILY JOURNAL -->
     <div class="page" id="pg-dailyjournal">
-      <div class="topbar">
-        <div class="topbar-left"><h1>Daily Journal</h1><div class="sub">Write notes for each trading day</div></div>
-        <div class="topbar-right"><button class="spb" onclick="saveDayNote()">Save Note</button></div>
-      </div>
+      <div class="topbar"><div class="topbar-left"><h1>Daily Journal</h1><div class="sub">Write notes for each trading day</div></div><div class="topbar-right"><button class="spb" onclick="saveDayNote()">Save Note</button></div></div>
       <div class="dj-layout">
         <div class="dj-left">
           <div class="dj-date-row">
@@ -183,25 +241,17 @@
 
     <!-- PLAYBOOK -->
     <div class="page" id="pg-playbook">
-      <div class="topbar">
-        <div class="topbar-left"><h1>Playbook</h1><div class="sub">Your documented setups &amp; rules</div></div>
-        <div class="topbar-right"><button class="spb" onclick="openPlaybookModal()">+ New Setup</button></div>
-      </div>
-      <div class="pb-grid" id="pb-grid">
-        <div class="pb-empty"><div class="empty-i">📋</div><div class="empty-t">No setups documented yet.<br>Add your first setup to build your playbook.</div></div>
-      </div>
+      <div class="topbar"><div class="topbar-left"><h1>Playbook</h1><div class="sub">Your documented setups &amp; rules</div></div><div class="topbar-right"><button class="spb" onclick="openPlaybookModal()">+ New Setup</button></div></div>
+      <div class="pb-grid" id="pb-grid"><div class="pb-empty"><div class="empty-i">📋</div><div class="empty-t">No setups yet. Add your first setup.</div></div></div>
     </div>
 
     <!-- REPORTS -->
     <div class="page" id="pg-reports">
-      <div class="topbar">
-        <div class="topbar-left"><h1>Reports</h1><div class="sub">Filtered performance stats</div></div>
-      </div>
+      <div class="topbar"><div class="topbar-left"><h1>Reports</h1><div class="sub">Filtered performance stats</div></div></div>
       <div class="rpt-filter">
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
           <span style="font-size:12px;font-weight:600;color:var(--text2)">Date range:</span>
-          <input type="date" id="rpt-from" class="ci">
-          <span style="color:var(--text3);font-size:13px">to</span>
+          <input type="date" id="rpt-from" class="ci"><span style="color:var(--text3);font-size:13px">to</span>
           <input type="date" id="rpt-to" class="ci">
           <select class="ci" id="rpt-setup"><option value="">All Setups</option><option>Breakout</option><option>Reversal</option><option>Trend Follow</option><option>Support/Resistance</option><option>Gap Fill</option><option>Other</option></select>
           <button class="spb" onclick="renderReports()" style="padding:8px 18px;font-size:13px">Run Report</button>
@@ -216,7 +266,7 @@
       <div class="bp" style="margin-bottom:16px">
         <div class="bp-head">Trades in Range</div>
         <div class="ttw" style="border:none;margin-top:0">
-          <div class="tth"><div class="th">Date</div><div class="th">Symbol</div><div class="th">Setup</div><div class="th">Entry</div><div class="th">Exit</div><div class="th">P&amp;L</div><div class="th">Quality</div></div>
+          <div class="tth" style="grid-template-columns:110px 120px 140px 100px 100px 120px 110px"><div class="th">Date</div><div class="th">Symbol</div><div class="th">Setup</div><div class="th">Entry</div><div class="th">Exit</div><div class="th">P&amp;L</div><div class="th">Quality</div></div>
           <div class="ttb" id="rpt-tbody" style="max-height:320px"></div>
         </div>
       </div>
@@ -276,7 +326,7 @@
       <div class="topbar"><div class="topbar-left"><h1>Settings</h1><div class="sub">Configuration · Sync · Security</div></div></div>
       <div class="ibnr">◈ &nbsp;<strong>GitHub Gist Storage</strong> — Sync trades to a private Gist. Create one at <code>gist.github.com</code>, copy the ID from the URL. Generate a token at <code>github.com/settings/tokens</code> with <code>gist</code> scope.</div>
       <div class="spg">
-        <div class="sp"><div class="spt">Gist Sync</div><div class="sps">Connect GitHub to sync across devices. Token stored locally only.</div>
+        <div class="sp"><div class="spt">Gist Sync</div><div class="sps">Connect GitHub to sync across devices.</div>
           <div class="spf"><label>Personal Access Token</label><input type="password" id="stok" placeholder="ghp_xxxxxxxxxx"></div>
           <div class="spf"><label>Gist ID</label><input type="text" id="sgid" placeholder="abc123def456..."></div>
           <button class="spb" onclick="saveGist()">Save &amp; Connect</button>
@@ -290,7 +340,7 @@
         <div class="sp full"><div class="spt">Data Management</div><div class="sps">Export or wipe all local data.</div>
           <div style="display:flex;gap:10px;flex-wrap:wrap">
             <button class="spb" onclick="expJSON()">Export JSON</button>
-            <button class="spb" onclick="exportPDF()">Export PDF Report</button>
+            <button class="spb" onclick="exportPDF()">Export PDF</button>
             <button class="spb dng" onclick="clr()">Clear All Data</button>
           </div>
         </div>
@@ -337,10 +387,10 @@
           <div class="quality-score-preview" id="qs-preview">—/4</div>
         </div>
         <div class="quality-checks">
-          <div class="qcheck" id="qc-setup" onclick="toggleQ('setup')"><div class="qcheck-box" id="qcb-setup">✓</div><div><div class="qcheck-label">Followed My Setup</div><div class="qcheck-sub">Entry matched my predefined setup rules &amp; criteria</div></div></div>
-          <div class="qcheck" id="qc-sizing" onclick="toggleQ('sizing')"><div class="qcheck-box" id="qcb-sizing">✓</div><div><div class="qcheck-label">Followed Position Sizing</div><div class="qcheck-sub">Risked only my planned % — no oversizing or revenge sizing</div></div></div>
-          <div class="qcheck" id="qc-sl" onclick="toggleQ('sl')"><div class="qcheck-box" id="qcb-sl">✓</div><div><div class="qcheck-label">Respected Stop-Loss</div><div class="qcheck-sub">Did not move, widen, or ignore the stop-loss</div></div></div>
-          <div class="qcheck" id="qc-structure" onclick="toggleQ('structure')"><div class="qcheck-box" id="qcb-structure">✓</div><div><div class="qcheck-label">A+ Structure Only</div><div class="qcheck-sub">Only took the trade because the structure was high quality</div></div></div>
+          <div class="qcheck" id="qc-setup" onclick="toggleQ('setup')"><div class="qcheck-box" id="qcb-setup">✓</div><div><div class="qcheck-label">Followed My Setup</div><div class="qcheck-sub">Entry matched predefined setup rules</div></div></div>
+          <div class="qcheck" id="qc-sizing" onclick="toggleQ('sizing')"><div class="qcheck-box" id="qcb-sizing">✓</div><div><div class="qcheck-label">Followed Position Sizing</div><div class="qcheck-sub">Risked only my planned % — no oversizing</div></div></div>
+          <div class="qcheck" id="qc-sl" onclick="toggleQ('sl')"><div class="qcheck-box" id="qcb-sl">✓</div><div><div class="qcheck-label">Respected Stop-Loss</div><div class="qcheck-sub">Did not move, widen, or ignore the stop</div></div></div>
+          <div class="qcheck" id="qc-structure" onclick="toggleQ('structure')"><div class="qcheck-box" id="qcb-structure">✓</div><div><div class="qcheck-label">A+ Structure Only</div><div class="qcheck-sub">Took trade only for high-quality structure</div></div></div>
         </div>
       </div>
       <input type="hidden" id="f-q-setup" value="0">
@@ -370,9 +420,9 @@
       <div class="fg"><label>Market Condition</label><select id="pb-market"><option value="">Select...</option><option>Trending Up</option><option>Trending Down</option><option>Sideways</option><option>High Volatility</option><option>Any</option></select></div>
       <div class="fg full"><label>Entry Rules</label><textarea id="pb-entry" placeholder="What conditions must be true BEFORE you enter?"></textarea></div>
       <div class="fg full"><label>Exit Rules</label><textarea id="pb-exit" placeholder="When do you take profit? Where is your stop?"></textarea></div>
-      <div class="fg full"><label>Indicators / Confluence</label><textarea id="pb-ind" placeholder="Which indicators or price action signals confirm this setup?"></textarea></div>
-      <div class="fg full"><label>Notes &amp; Reminders</label><textarea id="pb-notes" placeholder="Mistakes to avoid, psychology notes, best time of day..."></textarea></div>
-      <div class="fg full"><label>Example Chart Image</label>
+      <div class="fg full"><label>Indicators / Confluence</label><textarea id="pb-ind" placeholder="Which indicators or signals confirm this setup?"></textarea></div>
+      <div class="fg full"><label>Notes &amp; Reminders</label><textarea id="pb-notes" placeholder="Mistakes to avoid, psychology notes..."></textarea></div>
+      <div class="fg full"><label>Example Chart</label>
         <div class="iz"><input type="file" accept="image/*" onchange="pbImgUp(event)"><div class="iz-t">📷 Upload an example chart for this setup</div><img id="pb-iprev" class="ip"></div>
         <input type="hidden" id="pb-chart">
       </div>
