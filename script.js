@@ -231,7 +231,7 @@ function od(id){
 
 // ── DASHBOARD
 function rd(){
-  if(!trades.length){resetD();eqChart([],[]);wlChart(0,0);renderRadar();renderRecentTrades();return;}
+  if(!trades.length){resetD();eqChart([],[]);wlChart(0,0);renderRadar();renderRecentTrades();updateGauges(0,0,0,0);if(ndpC)ndpC.destroy();return;}
   const sorted=[...trades].sort((a,b)=>new Date(a.date)-new Date(b.date));
   const total=trades.reduce((s,t)=>s+t.pnl,0);
   const wins=trades.filter(t=>t.pnl>0),losses=trades.filter(t=>t.pnl<0);
@@ -257,7 +257,14 @@ function rd(){
   const eb=document.getElementById('eq-big');
   eb.textContent=`${sg}₹${Math.abs(total).toLocaleString('en-IN',{minimumFractionDigits:2})}`;
   eb.style.color=total>=0?'var(--green)':'var(--red)';
-  eqChart(labels,eq);wlChart(wins.length,losses.length);renderRadar();
+  eqChart(labels,eq);wlChart(wins.length,losses.length);renderRadar();ndpChart();
+  // Gauge values
+  const wrNum=parseFloat(wr);
+  const pfNum=gl>0?(gp/gl):gp>0?5:0;
+  const pfPct=Math.min(pfNum/3*100,100); // PF of 3 = 100%
+  const rrPct=(()=>{const rrt2=trades.filter(t=>t.rr&&t.rr.includes(':'));if(!rrt2.length)return 0;const vs2=rrt2.map(t=>{const p=t.rr.split(':');return parseFloat(p[1])/parseFloat(p[0]);}).filter(x=>!isNaN(x));if(!vs2.length)return 0;const avgR=vs2.reduce((a,b)=>a+b,0)/vs2.length;return Math.min(avgR/3*100,100);})();
+  const totalPct=total>0?Math.min(total/100000*100,100):0; // 1L as benchmark
+  updateGauges(wrNum,pfPct,rrPct,totalPct);
   let mw=0,ml=0,wc=0,lc=0;
   sorted.forEach(t=>{if(t.pnl>0){wc++;lc=0;mw=Math.max(mw,wc);}else if(t.pnl<0){lc++;wc=0;ml=Math.max(ml,lc);}else{wc=0;lc=0;}});
   const last=sorted[sorted.length-1];
@@ -715,3 +722,85 @@ function chgPass(){const np=document.getElementById('snp').value,cp=document.get
 // ── TOAST
 let _tt;
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.style.display='block';clearTimeout(_tt);_tt=setTimeout(()=>el.style.display='none',2800);}
+
+// ── GAUGE MINI-CHARTS on stat cards
+let gaugeCharts={};
+function drawGauge(id,pct,color){
+  const canvas=document.getElementById(id);
+  if(!canvas)return;
+  if(gaugeCharts[id])gaugeCharts[id].destroy();
+  const clamp=Math.min(Math.max(pct,0),100);
+  gaugeCharts[id]=new Chart(canvas.getContext('2d'),{
+    type:'doughnut',
+    data:{
+      datasets:[{
+        data:[clamp,100-clamp],
+        backgroundColor:[color,color.replace(')',',0.1)').replace('rgb','rgba')],
+        borderWidth:0,
+        circumference:180,
+        rotation:-90,
+        borderRadius:4
+      }]
+    },
+    options:{responsive:false,cutout:'68%',plugins:{legend:{display:false},tooltip:{enabled:false}}}
+  });
+}
+
+function updateGauges(wrPct,pfPct,rrPct,totalPct){
+  // WR gauge — green
+  drawGauge('g-wr',wrPct,'rgb(18,183,106)');
+  document.getElementById('gv-wr').textContent=Math.round(wrPct)+'%';
+  // PF gauge — blue
+  drawGauge('g-pf',pfPct,'rgb(46,144,250)');
+  document.getElementById('gv-pf').textContent=Math.round(pfPct)+'%';
+  // RR gauge — amber
+  drawGauge('g-rr',rrPct,'rgb(247,144,9)');
+  document.getElementById('gv-rr').textContent=Math.round(rrPct)+'%';
+  // P&L gauge — purple (positive = % full of target, e.g. vs 100k goal)
+  drawGauge('g-pnl',totalPct,'rgb(124,92,252)');
+  document.getElementById('gv-pnl').textContent=Math.round(totalPct)+'%';
+}
+
+// ── NET DAILY P&L CHART
+let ndpC=null;
+function ndpChart(){
+  const ctx=document.getElementById('ndp-c');
+  if(!ctx)return;
+  if(ndpC)ndpC.destroy();
+  // build daily P&L map
+  const dayMap={};
+  trades.forEach(t=>{dayMap[t.date]=(dayMap[t.date]||0)+t.pnl;});
+  const days=Object.keys(dayMap).sort().slice(-30);
+  const vals=days.map(d=>parseFloat(dayMap[d].toFixed(2)));
+  const fmt=v=>`${v>=0?'+':''}₹${Math.abs(v).toLocaleString('en-IN',{maximumFractionDigits:0})}`;
+  ndpC=new Chart(ctx.getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:days,
+      datasets:[{
+        data:vals,
+        backgroundColor:vals.map(v=>v>=0?'rgba(18,183,106,0.20)':'rgba(240,68,56,0.18)'),
+        borderColor:vals.map(v=>v>=0?'#12b76a':'#f04438'),
+        borderWidth:1.5,
+        borderRadius:5,
+        borderSkipped:false
+      }]
+    },
+    options:{
+      responsive:true,
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:'#ffffff',borderColor:'rgba(0,0,0,0.08)',borderWidth:1,
+          bodyColor:'#101828',bodyFont:{family:'DM Mono',size:12},
+          titleColor:'#667085',titleFont:{family:'DM Mono',size:10},
+          callbacks:{label:c=>fmt(c.parsed.y)}
+        }
+      },
+      scales:{
+        x:{ticks:{color:'#98a2b3',font:{family:'DM Mono',size:9},maxTicksLimit:12,maxRotation:0},grid:{display:false},border:{display:false}},
+        y:{ticks:{color:'#98a2b3',font:{family:'DM Mono',size:10},callback:v=>fmt(v)},grid:{color:'rgba(0,0,0,0.04)'},border:{display:false}}
+      }
+    }
+  });
+}
