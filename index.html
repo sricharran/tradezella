@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TradeLog — Personal Trading Journal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
@@ -13,43 +14,52 @@
 
 
 :root {
-  --bg: #f4f6fb;
-  --bg2: #eef0f7;
+  --bg: #f0f2f5;
+  --bg2: #e8eaee;
   --surface: #ffffff;
-  --surf2: #f8f9fd;
-  --surf3: #edf0f8;
-  --border: rgba(0,0,0,0.07);
-  --border2: rgba(0,0,0,0.11);
-  --border3: rgba(0,0,0,0.16);
+  --surf2: #f7f8fa;
+  --surf3: #eef0f3;
+  --border: rgba(0,0,0,0.06);
+  --border2: rgba(0,0,0,0.10);
+  --border3: rgba(0,0,0,0.15);
 
-  --purple: #6250ed;
-  --purple2: #7c6cf0;
-  --purple3: #4e3ed6;
-  --purple-dim: rgba(98,80,237,0.08);
-  --purple-mid: rgba(98,80,237,0.16);
-  --purple-glow: rgba(98,80,237,0.28);
+  --accent: #1a56db;
+  --accent2: #2563eb;
+  --accent3: #1e40af;
+  --accent-dim: rgba(26,86,219,0.07);
+  --accent-mid: rgba(26,86,219,0.14);
+  --accent-glow: rgba(26,86,219,0.22);
 
-  --green: #00a76f;
-  --green-d: rgba(0,167,111,0.08);
-  --green-b: rgba(0,167,111,0.18);
-  --red: #e5304a;
-  --red-d: rgba(229,48,74,0.07);
-  --red-b: rgba(229,48,74,0.16);
-  --amber: #d97706;
-  --blue: #1d7afc;
+  /* keep --purple vars aliased for compatibility */
+  --purple: #1a56db;
+  --purple2: #2563eb;
+  --purple3: #1e40af;
+  --purple-dim: rgba(26,86,219,0.07);
+  --purple-mid: rgba(26,86,219,0.14);
+  --purple-glow: rgba(26,86,219,0.22);
+
+  --green: #059669;
+  --green-d: rgba(5,150,105,0.07);
+  --green-b: rgba(5,150,105,0.16);
+  --red: #dc2626;
+  --red-d: rgba(220,38,38,0.06);
+  --red-b: rgba(220,38,38,0.14);
+  --amber: #b45309;
+  --blue: #2563eb;
   --cyan: #0891b2;
 
-  --text: #0f1118;
-  --text2: #3d4466;
-  --text3: #7b82a0;
-  --text4: #b0b7d0;
+  --text: #111827;
+  --text2: #374151;
+  --text3: #6b7280;
+  --text4: #9ca3af;
 
-  --body: 'Syne', sans-serif;
-  --mono: 'Syne', sans-serif;
+  --body: 'DM Sans', sans-serif;
+  --mono: 'DM Sans', sans-serif;
+  --serif: 'DM Serif Display', serif;
 
-  --radius: 14px;
-  --radius-sm: 9px;
-  --sidebar-w: 228px;
+  --radius: 10px;
+  --radius-sm: 7px;
+  --sidebar-w: 220px;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
