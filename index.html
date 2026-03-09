@@ -84,7 +84,7 @@
           <div class="sc-accent purple"></div>
           <div class="sc-top">
             <div class="sc-lbl">Total P&amp;L</div>
-            <div class="sc-gauge-wrap"><canvas id="g-pnl" width="52" height="32"></canvas><div class="sc-gauge-val" id="gv-pnl"></div></div>
+            <div class="sc-gauge-wrap"><canvas id="g-pnl" width="64" height="40"></canvas><div class="sc-gauge-val" id="gv-pnl"></div></div>
           </div>
           <div class="sc-val purple" id="s-pnl">₹0</div>
           <div class="sc-sub" id="s-psub">0 trades logged</div>
@@ -93,7 +93,7 @@
           <div class="sc-accent green"></div>
           <div class="sc-top">
             <div class="sc-lbl">Win Rate</div>
-            <div class="sc-gauge-wrap"><canvas id="g-wr" width="52" height="32"></canvas><div class="sc-gauge-val" id="gv-wr"></div></div>
+            <div class="sc-gauge-wrap"><canvas id="g-wr" width="64" height="40"></canvas><div class="sc-gauge-val" id="gv-wr"></div></div>
           </div>
           <div class="sc-val neu" id="s-wr">0%</div>
           <div class="sc-sub" id="s-wsub">0W · 0L</div>
@@ -102,7 +102,7 @@
           <div class="sc-accent blue"></div>
           <div class="sc-top">
             <div class="sc-lbl">Profit Factor</div>
-            <div class="sc-gauge-wrap"><canvas id="g-pf" width="52" height="32"></canvas><div class="sc-gauge-val" id="gv-pf"></div></div>
+            <div class="sc-gauge-wrap"><canvas id="g-pf" width="64" height="40"></canvas><div class="sc-gauge-val" id="gv-pf"></div></div>
           </div>
           <div class="sc-val neu" id="s-pf">0.00</div>
           <div class="sc-sub">Gross profit / gross loss</div>
@@ -111,7 +111,7 @@
           <div class="sc-accent amber"></div>
           <div class="sc-top">
             <div class="sc-lbl">Avg Risk:Reward</div>
-            <div class="sc-gauge-wrap"><canvas id="g-rr" width="52" height="32"></canvas><div class="sc-gauge-val" id="gv-rr"></div></div>
+            <div class="sc-gauge-wrap"><canvas id="g-rr" width="64" height="40"></canvas><div class="sc-gauge-val" id="gv-rr"></div></div>
           </div>
           <div class="sc-val neu" id="s-rr">—</div>
           <div class="sc-sub">Average across all trades</div>
@@ -120,24 +120,30 @@
 
       <!-- SCORE + EQUITY + WIN/LOSS ROW -->
       <div class="dash-row3">
-        <div class="cc">
+        <!-- LEFT: Radar Score card, tall & prominent -->
+        <div class="cc cc-radar">
           <div class="cc-head">
             <div><div class="cc-lbl">TradeLog Score</div><div class="cc-sub">Process · Win Rate · Profit Factor</div></div>
             <div class="tls-badge" id="tls-badge" style="color:var(--purple)">—</div>
           </div>
-          <canvas id="radar-c" height="190"></canvas>
+          <div class="radar-canvas-wrap">
+            <canvas id="radar-c"></canvas>
+          </div>
           <div class="tls-sub" id="tls-sub">Log trades to see your score</div>
         </div>
-        <div class="cc">
-          <div class="cc-head">
-            <div><div class="cc-lbl">Equity Curve</div><div class="cc-sub">Cumulative P&amp;L over time</div></div>
-            <div class="cc-big" id="eq-big" style="color:var(--green)">₹0</div>
+        <!-- RIGHT: Equity + Win/Loss stacked -->
+        <div class="dash-row3-right">
+          <div class="cc">
+            <div class="cc-head">
+              <div><div class="cc-lbl">Equity Curve</div><div class="cc-sub">Cumulative P&amp;L over time</div></div>
+              <div class="cc-big" id="eq-big" style="color:var(--green)">₹0</div>
+            </div>
+            <canvas id="eq-c" height="130"></canvas>
           </div>
-          <canvas id="eq-c" height="165"></canvas>
-        </div>
-        <div class="cc">
-          <div class="cc-head"><div><div class="cc-lbl">Win / Loss Split</div><div class="cc-sub">Outcome breakdown</div></div></div>
-          <canvas id="wl-c" height="165"></canvas>
+          <div class="cc">
+            <div class="cc-head"><div><div class="cc-lbl">Win / Loss Split</div><div class="cc-sub">Outcome breakdown</div></div></div>
+            <canvas id="wl-c" height="130"></canvas>
+          </div>
         </div>
       </div>
 
