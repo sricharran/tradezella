@@ -109,7 +109,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--body);min-height:1
 .dash-row3{display:grid;grid-template-columns:280px 1fr;gap:14px;margin-bottom:18px;}
 .dash-col-left{display:flex;flex-direction:column;gap:14px;}
 .dash-col-right{display:flex;flex-direction:column;}
-.cc{background:white;border:1px solid var(--border);border-radius:16px;padding:20px 22px;animation:cardUp .35s ease .18s both;min-width:0;overflow:visible;}
+.dash-col-right > .cc{height:580px;display:flex;flex-direction:column;}
+.dash-col-right > .cc canvas{flex:1;min-height:0;}
+.cc{background:white;border:1px solid var(--border);border-radius:16px;padding:20px 22px;animation:cardUp .35s ease .18s both;min-width:0;}
 .cc-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
 .cc-lbl{font-size:13px;font-weight:700;color:var(--text);}
 .cc-sub{font-size:11px;color:var(--text3);margin-top:2px;}
@@ -447,10 +449,3 @@ select.ci option{background:white;}
 .wl-compact{background:white;border:1px solid var(--border);border-radius:16px;padding:16px 18px;animation:cardUp .35s ease .18s both;}
 .wl-compact .cc-lbl{font-size:13px;font-weight:700;color:var(--text);}
 .wl-compact .cc-sub{font-size:11px;color:var(--text3);margin-top:2px;margin-bottom:10px;}
-
-/* ── Equity curve matches left col height ── */
-.dash-row3{align-items:stretch;}
-.dash-col-left{height:fit-content;}
-.dash-col-right{align-self:stretch;}
-.dash-col-right > .cc{height:100%;display:flex;flex-direction:column;box-sizing:border-box;}
-.dash-col-right > .cc canvas{flex:1;min-height:0;max-height:400px;}
