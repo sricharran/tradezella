@@ -301,7 +301,7 @@ function renderRadar(){
   const ctx=document.getElementById('radar-c').getContext('2d');
   if(radarC)radarC.destroy();
   const emptyData={labels:['Win Rate','Avg W/L','Profit Factor','Discipline','Consistency'],datasets:[{data:[0,0,0,0,0],backgroundColor:'rgba(124,92,252,0.08)',borderColor:'rgba(124,92,252,0.25)',borderWidth:2,pointBackgroundColor:'rgba(124,92,252,0.3)',pointRadius:3}]};
-  const radarOpts={responsive:true,plugins:{legend:{display:false},tooltip:{backgroundColor:'#fff',borderColor:'rgba(0,0,0,0.1)',borderWidth:1,bodyColor:'#101828',callbacks:{label:c=>Math.round(c.parsed.r)+'/100'}}},scales:{r:{min:0,max:100,ticks:{display:false},grid:{color:'rgba(0,0,0,0.07)'},angleLines:{color:'rgba(0,0,0,0.07)'},pointLabels:{font:{family:'Plus Jakarta Sans',size:11,weight:'600'},color:'#475467'}}}};
+  const radarOpts={responsive:true,plugins:{legend:{display:false},tooltip:{backgroundColor:'#fff',borderColor:'rgba(0,0,0,0.1)',borderWidth:1,bodyColor:'#101828',callbacks:{label:c=>Math.round(c.parsed.r)+'/100'}}},scales:{r:{min:0,max:100,ticks:{display:false},grid:{color:'rgba(0,0,0,0.07)'},angleLines:{color:'rgba(0,0,0,0.07)'},pointLabels:{font:{family:'Plus Jakarta Sans',size:10,weight:'600'},color:'#475467',padding:20,callback:l=>l}}}};
   if(!trades.length){
     document.getElementById('tls-badge').textContent='—';
     document.getElementById('tls-sub').textContent='Log trades to see your score';
@@ -356,7 +356,7 @@ function eqChart(labels,data){
   if(eqC)eqC.destroy();
   const last=data[data.length-1]||0;
   const col=last>=0?'#12b76a':'#f04438';
-  eqC=new Chart(ctx,{type:'line',data:{labels,datasets:[{data,borderColor:col,backgroundColor:col+'18',borderWidth:2,fill:true,tension:0.38,pointRadius:data.length<30?3:0,pointBackgroundColor:col,pointBorderWidth:0}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{backgroundColor:'#ffffff',borderColor:'rgba(0,0,0,0.08)',borderWidth:1,titleColor:'#667085',bodyColor:'#101828',titleFont:{family:'DM Mono',size:10},bodyFont:{family:'DM Mono',size:12},callbacks:{label:c=>'₹'+c.parsed.y.toLocaleString('en-IN')}}},scales:{x:{ticks:{color:'#667085',font:{family:'DM Mono',size:10},maxTicksLimit:8},grid:{color:'rgba(0,0,0,0.05)'},border:{color:'rgba(0,0,0,0.08)'}},y:{ticks:{color:'#667085',font:{family:'DM Mono',size:10},callback:v=>'₹'+v.toLocaleString('en-IN')},grid:{color:'rgba(0,0,0,0.05)'},border:{color:'rgba(0,0,0,0.08)'}}}}}); 
+  eqC=new Chart(ctx,{type:'line',data:{labels,datasets:[{data,borderColor:col,backgroundColor:col+'18',borderWidth:2,fill:true,tension:0.38,pointRadius:data.length<30?3:0,pointBackgroundColor:col,pointBorderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#ffffff',borderColor:'rgba(0,0,0,0.08)',borderWidth:1,titleColor:'#667085',bodyColor:'#101828',titleFont:{family:'DM Mono',size:10},bodyFont:{family:'DM Mono',size:12},callbacks:{label:c=>'₹'+c.parsed.y.toLocaleString('en-IN')}}},scales:{x:{ticks:{color:'#667085',font:{family:'DM Mono',size:10},maxTicksLimit:8},grid:{color:'rgba(0,0,0,0.05)'},border:{color:'rgba(0,0,0,0.08)'}},y:{ticks:{color:'#667085',font:{family:'DM Mono',size:10},callback:v=>'₹'+v.toLocaleString('en-IN')},grid:{color:'rgba(0,0,0,0.05)'},border:{color:'rgba(0,0,0,0.08)'}}}}}); 
 }
 
 function wlChart(w,l){
