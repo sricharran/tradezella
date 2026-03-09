@@ -300,8 +300,8 @@ function resetD(){
 function renderRadar(){
   const ctx=document.getElementById('radar-c').getContext('2d');
   if(radarC)radarC.destroy();
-  const emptyData={labels:['Win Rate','Avg W/L','Profit Factor','Discipline','Consistency'],datasets:[{data:[0,0,0,0,0],backgroundColor:'rgba(124,92,252,0.06)',borderColor:'rgba(124,92,252,0.2)',borderWidth:1.5,pointBackgroundColor:'rgba(124,92,252,0.2)',pointRadius:3}]};
-  const radarOpts={responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false},tooltip:{backgroundColor:'#fff',borderColor:'rgba(0,0,0,0.1)',borderWidth:1,bodyColor:'#101828',callbacks:{label:c=>Math.round(c.parsed.r)+'/100'}}},scales:{r:{min:0,max:100,ticks:{display:false},grid:{color:'rgba(0,0,0,0.06)'},angleLines:{color:'rgba(0,0,0,0.06)'},pointLabels:{font:{family:'Plus Jakarta Sans',size:12,weight:'700'},color:'#475467',padding:12}}}};
+  const emptyData={labels:['Win Rate','Avg W/L','Profit Factor','Discipline','Consistency'],datasets:[{data:[0,0,0,0,0],backgroundColor:'rgba(124,92,252,0.08)',borderColor:'rgba(124,92,252,0.25)',borderWidth:2,pointBackgroundColor:'rgba(124,92,252,0.3)',pointRadius:3}]};
+  const radarOpts={responsive:true,plugins:{legend:{display:false},tooltip:{backgroundColor:'#fff',borderColor:'rgba(0,0,0,0.1)',borderWidth:1,bodyColor:'#101828',callbacks:{label:c=>Math.round(c.parsed.r)+'/100'}}},scales:{r:{min:0,max:100,ticks:{display:false},grid:{color:'rgba(0,0,0,0.07)'},angleLines:{color:'rgba(0,0,0,0.07)'},pointLabels:{font:{family:'Plus Jakarta Sans',size:11,weight:'600'},color:'#475467'}}}};
   if(!trades.length){
     document.getElementById('tls-badge').textContent='—';
     document.getElementById('tls-sub').textContent='Log trades to see your score';
@@ -329,7 +329,7 @@ function renderRadar(){
   badge.textContent=overall;
   badge.style.color=overall>=70?'var(--green)':overall>=50?'var(--purple)':'var(--red)';
   document.getElementById('tls-sub').textContent=overall>=80?'Excellent process 🏆':overall>=60?'Good discipline ✅':overall>=40?'Room to improve ⚠️':'Needs attention ❌';
-  radarC=new Chart(ctx,{type:'radar',data:{labels:['Win Rate','Avg W/L','Profit Factor','Discipline','Consistency'],datasets:[{data:vals,backgroundColor:'rgba(124,92,252,0.14)',borderColor:'rgba(124,92,252,0.8)',borderWidth:2.5,pointBackgroundColor:'#7c5cfc',pointBorderColor:'white',pointBorderWidth:2,pointRadius:5,pointHoverRadius:7}]},options:radarOpts});
+  radarC=new Chart(ctx,{type:'radar',data:{labels:['Win Rate','Avg W/L','Profit Factor','Discipline','Consistency'],datasets:[{data:vals,backgroundColor:'rgba(124,92,252,0.12)',borderColor:'rgba(124,92,252,0.7)',borderWidth:2,pointBackgroundColor:'#7c5cfc',pointRadius:4}]},options:radarOpts});
 }
 
 // ── RECENT TRADES
@@ -730,20 +730,19 @@ function drawGauge(id,pct,color){
   if(!canvas)return;
   if(gaugeCharts[id])gaugeCharts[id].destroy();
   const clamp=Math.min(Math.max(pct,0),100);
-  const bg=color.replace('rgb(','rgba(').replace(')',',0.1)');
   gaugeCharts[id]=new Chart(canvas.getContext('2d'),{
     type:'doughnut',
     data:{
       datasets:[{
         data:[clamp,100-clamp],
-        backgroundColor:[color,bg],
+        backgroundColor:[color,color.replace(')',',0.1)').replace('rgb','rgba')],
         borderWidth:0,
         circumference:180,
         rotation:-90,
-        borderRadius:6
+        borderRadius:4
       }]
     },
-    options:{responsive:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{enabled:false}}}
+    options:{responsive:false,cutout:'68%',plugins:{legend:{display:false},tooltip:{enabled:false}}}
   });
 }
 
